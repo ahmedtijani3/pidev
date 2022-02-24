@@ -1,0 +1,97 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Categorie index{% endblock %}
+
+{% block body %}
+<html>
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style>
+
+        body {
+            margin: 0;
+            font-family: Arial, Helvetica, sans-serif;
+        }
+
+        .topnav {
+            overflow: hidden;
+            background-color: #333;
+        }
+
+        .topnav a {
+            float: left;
+            color: #f2f2f2;
+            text-align: center;
+            padding: 14px 16px;
+            text-decoration: none;
+            font-size: 17px;
+        }
+
+        .topnav a:hover {
+            background-color: #ddd;
+            color: black;
+        }
+
+        .topnav a.active {
+            background-color: #04AA6D;
+            color: white;
+        }
+
+    </style>
+
+</head>
+<body>
+
+
+
+<div class="topnav">
+    <a class="active" href="/home">Home</a>
+    <a href="{{ path('produit_index') }}">Produit</a>
+    <a href="{{ path('categorie_index') }}">Categorie</a>
+</div>
+    <style>
+        body{
+            background-image: url("https://www.ist-world.org/wp-content/uploads/2018/10/nutrition-sportif.jpg");
+            background-repeat: no-repeat;
+            background-size: cover;
+        }
+
+    </style>
+    <h1>Categorie index</h1>
+
+    <table class="table" border="2">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Nom_Categorie</th>
+                <th>Desciption</th>
+                <th>Type</th>
+                <th>Reference</th>
+                <th>Date_Ajout</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for categorie in categories %}
+            <tr>
+                <td>{{ categorie.id }}</td>
+                <td>{{ categorie.NomCategorie }}</td>
+                <td>{{ categorie.Desciption }}</td>
+                <td>{{ categorie.Type }}</td>
+                <td>{{ categorie.Reference }}</td>
+                <td>{{ categorie.DateAjout? categorie.DateAjout|date('Y-m-d') : '' }}</td>
+                <td>
+                    <a href="{{ path('categorie_show', {'id': categorie.id}) }}">show</a>
+                    <a href="{{ path('categorie_edit', {'id': categorie.id}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="7">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('categorie_new') }}">Create new</a>
+{% endblock %}
