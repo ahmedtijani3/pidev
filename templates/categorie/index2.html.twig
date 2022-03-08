@@ -1,0 +1,98 @@
+{% extends 'backbase.html.twig' %}
+
+{% block title %}Categorie index{% endblock %}
+
+{% block body %}
+<html>
+
+<body>
+
+
+
+
+
+<h1>Categorie index</h1>
+
+<table class="table" >
+    <thead>
+    <tr>
+        <th>Id</th>
+        <th>Nom_Categorie</th>
+        <th>Desciption</th>
+        <th>Type</th>
+        <th>Reference</th>
+        <th>Date_Ajout</th>
+        <th>actions</th>
+    </tr>
+    </thead>
+    <tbody>
+    {% for categorie in categories %}
+        <tr>
+            <td>{{ categorie.id }}</td>
+            <td>{{ categorie.NomCategorie }}</td>
+            <td>{{ categorie.Desciption }}</td>
+            <td>{{ categorie.Type }}</td>
+            <td>{{ categorie.Reference }}</td>
+            <td>{{ categorie.DateAjout? categorie.DateAjout|date('Y-m-d') : '' }}</td>
+            <td>
+                <a href="{{ path('categorie_show', {'id': categorie.id}) }}">show</a>
+                <a href="{{ path('categorie_edit', {'id': categorie.id}) }}">edit</a>
+            </td>
+        </tr>
+    {% else %}
+        <tr>
+            <td colspan="7">no records found</td>
+        </tr>
+    {% endfor %}
+    </tbody>
+</table>
+
+<a href="{{ path('categorie_new') }}">Create new</a>
+<link rel="stylesheet" href="{{ asset('https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.min.css
+')}}" integrity="sha512-/zs32ZEJh+/EO2N1b0PEdoA10JkdC3zJ8L5FTiQu82LR9S/rOQNfQN7U59U9BC12swNeRAz3HSzIL2vpp4fv3w==" crossorigin="anonymous" >
+<canvas id="myChart" width="50" height="50"></canvas>
+
+{% endblock %}
+{% block script %}
+    <script src="{{ asset('../assets/js/jquery.min.js') }}"></script>
+    <script src="{{ asset('../assets/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
+    <script src="{{ asset('../assets/js/jquery.scrolly.min.js') }}"></script>
+    <script src="{{ asset('../assets/js/jquery.scrollex.min.js') }}"></script>
+    <script src="{{ asset('../assets/js/browser.min.js') }}"></script>
+    <script src="{{ asset('../assets/js/breakpoints.min.js') }}"></script>
+    <script src="{{ asset('../assets/js/util.js') }}"></script>
+    <script src="{{ asset('../assets/js/main.js') }}"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.min.js
+" integrity="sha512-d9xgZrVZpmmQlfonhQUvTR7lMPtO7NkZMkA0ABN3PHCbKA5nqylQ/yWlFAyY6hYgdF1Qh6nYiuADWwKB4C2WSw==" crossorigin="anonymous"></script>
+    <script>
+        var ctx = document.getElementById('myChart').getContext('2d');
+        var myChart = new Chart(ctx, {
+            type: 'bar',
+            data: {
+                labels: {{  produit|raw }},
+                datasets: [{
+                    label: 'Note total evenements:',
+                    data: {{  count|raw }},
+                    backgroundColor: [
+
+
+                    ],
+                    borderColor: [
+
+                    ],
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                scales: {
+                    yAxes: [{
+                        ticks: {
+                            beginAtZero: true
+                        }
+                    }]
+                }
+            }
+        });
+    </script>
+{% endblock %}
+
